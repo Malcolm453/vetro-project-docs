@@ -1,0 +1,26 @@
+## Steps on deploying USSDs
+
+```bash
+Step 1: $ sudo ssh <<username>> @ << ip_address>> (Please note remove angle brackets)*
+
+Step 2: Enter your laptop password
+
+Step 3: Enter your server password
+
+Step 4: $ ls into the directory then cd into sites
+
+Step 5: $ cd into vetro-sms-ussd-gateway
+
+Step 6: $ git pull or sudo git pull
+
+Step 7: $ sudo docker-compose exec app bash
+
+Step 8: $ php artisan module:optimize
+
+Step 9: $ php artisan migrate
+
+Step 10: Login to ussd.co.za platform
+
+Step 11: Make sure there are no duplicate short codes on the system. However,
+         if you find any duplicates touch base with Marc on what to do with that 
+```

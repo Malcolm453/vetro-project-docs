@@ -1,0 +1,43 @@
+# Welcome to Vetro USSDs
+ 
+
+Welcome to Vetro Media USSD & SMS Gateway.
+
+This system hosts USSD, SMS and Till slip reader campaign applications as well as their databases and reports.
+
+This application is built in Laravel 5.4 using the following additional dependencies:
+
+    * "caffeinated/modules": "~4.0" (used to create modules)
+    * "maatwebsite/excel": "~2.1.0" (used to export data in XLS files)
+
+Please refer to the following documentation for more detailed info on how to interact with these dependancies.
+
+    * https://github.com/caffeinated/modules/wiki
+    * https://github.com/Maatwebsite/Laravel-Excel
+
+Now let's get started on the type of campaigns and how to manage them.
+Important notes
+
+Don'ts:
+
+    Do not create database tables manually via Database management softwares (Eg. Phpmyadmin, Sequelpro, etc...) . Please refer to the Laravel documentation on migrations as not following this will break the version control of this system. We want to trace all the changes done in the database programmatically. Please also refer to this documentation for more information on ORM
+
+    Please do not manually add/remove/temper with files in the vendor folder. Please make use of composer to manage dependency.
+
+    Never include the vendor folder in your items to commit as this is not good practice. composer will manage all of that for you. Please refer to the documentation.
+
+    Never put changes in the branch master. Please refer to the deployment guidelines for more info
+
+Dos :
+
+    Structure your modules accordingly to have a seamless code flow and design
+
+    Use a repository design pattern as recommended here
+
+    Please refer to Laravel Documentation and good practices to allow developers involved in the project to be able to assist.
+
+What's next? Well, let's discover how to create, edit and manage campaigns.
+
+
+
+

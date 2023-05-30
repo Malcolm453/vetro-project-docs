@@ -1,0 +1,18 @@
+{
+  "name": "vetro-project-docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^13.4.4",
+    "nextra": "^2.6.2",
+    "nextra-theme-docs": "^2.6.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
