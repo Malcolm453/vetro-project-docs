@@ -1,0 +1,204 @@
+## Vetro Campaign Manager Gateway
+
+This application manages vetro media campaigns: - USSD - SMS - Till slip reading campaigns (Mobi-sites) - Whatsapp campaigns
+
+The system is built in Laravel 5.4 and uses the following main components:
+
+    Caffeinated modules for module management. Use this to create, enable and disable modules
+    Maatwebsite/Excel 2.1 for excel exports
+
+##### Environment Requirements
+
+    ```html showLineNumbers
+    Web Server: Apache2, Nginx
+    Database : Mysql 5.7
+    PHP : 7.2
+    ```
+
+###### Important notes:
+
+Command Line interface access for artisan commands
+Dedicated server for dependencies installation (Will not work on shared hosting environment)
+Domain must point to the application /public folder or be the default server host for apache
+Please have an SMTP account ready for emails
+Provider for USSD, Premium & SMS gateway is MobileWarehouse
+Whatsapp gateway provider is Waboxapp
+Have git installed in your computer
+Install composer here
+    
+
+##### Installation guide - DOCKER (Recommended)
+
+Please ensure that you have the latest version of docker desktop installed. Then make sure to download a database dump from this repo: Ussd database.
+
+After successfully installing, application should run on http://localhost:8000
+
+Run the following commands in root folder:
+
+```bash copy
+$ cp .docker/docker-compose.local.yml docker-compose.yml
+```
+
+Then create a .env file to prepare docker containers installation.
+
+```bash copy
+$ cp .env.example .env
+```
+
+Then deploy the local installation, and wait until installation is complete.
+
+```bash copy
+$ docker-compose up -d
+```
+
+As soon as installation is complete, ensure to run all the laravel installation commands inside the app container.
+
+```bash copy
+$ docker-compose exec app bash // Logs you in an SSH session in app container
+```
+
+When inside the container, run the following commands (IF YOU DO NOT WANT TO IMPORT DATABASE)
+
+```bash copy
+$ composer install
+$ php artisan migrate
+$ php artisan system:install
+```
+
+Importing database
+
+    Download the database in this database : Ussd database
+
+    Open the terminal to run the following commands to import the database.
+
+```bash copy
+$ docker exec -i vetro-sms-ussd-gateway-db mysql -uroot -padmin vetro_ussd < vetro_ussd.sql
+```
+
+Connecting to MySqlWorkBench
+
+```mysql
+Host: 127.0.0.1 User: root Password: admin Port: 3309
+```
+
+In the advanced Tab, make sure to add the following text in "Others text box"
+
+```text 
+useSSL=0
+```
+
+Installation guide - NO DOCKER (Not Recommended)
+
+Clone the repository (Make sure you are invited to the repository)
+
+```bash copy
+$ git clone https://{YOUR_USERNAME}@bitbucket.org/{YOUR_USERNAME}/vetro-sms-ussd-gateway.git
+```
+
+    Then install your dependencies using composer. Got to your application root folder and install the dependencies
+
+    ```bash  copy
+    $ cd vetro-sms-ussd-gateway/
+    $ composer install
+    ```
+
+    Create an .env file with your environment variables as follow
+
+```ini filename=".env" copy
+APP_NAME={Your Application name}
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_LOG_LEVEL=debug
+APP_URL={Your app base url}
+
+DB_CONNECTION=mysql
+DB_HOST={Your mysql database host}
+DB_PORT={Your mysql port (default : 3306) }
+DB_DATABASE={ Your mysql database name }
+DB_USERNAME={ Your mysql username }
+DB_PASSWORD={ Your mysql password }
+
+BROADCAST_DRIVER=log
+
+CACHE_DRIVER=file
+
+SESSION_DRIVER=file
+
+QUEUE_DRIVER=sync
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_DRIVER=smtp
+MAIL_HOST={Smtp host}
+MAIL_PORT={smtp port}
+MAIL_USERNAME={smtp username}
+MAIL_PASSWORD={smtp password}
+MAIL_ENCRYPTION=null
+
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+
+THRIVE_MOBI_USER=
+THRIVE_MOBI_PASS=
+THRIVE_MOBI_ACCOUNT=
+
+INGRAMS_MOBI_PASS=
+INGRAMS_MOBI_ACCOUNT=
+
+VETRO_ACCOUNT_USER=
+VETRO_ACCOUNT_PASSWORD=
+MOBI_SYS_URL=https://www.mobisysservices.co.za:34305/MNORechargeService/json/GetMNOPriceList
+MOBI_SYS_RECHARGE_URL=https://www.mobisysservices.co.za:34305/MNORechargeService/Json/MNORecharge
+
+OUTBOUND_SMS_PROVIDER_URL={}
+OUTBOUND_SMS_PROVIDER_USERNAME={}
+OUTBOUND_SMS_PROVIDER_PASSWORD={}
+OUTBOUND_WHATSAPP_PROVIDER=https://www.waboxapp.com/api/send/chat
+OUTBOUND_WHATSAPP_TOKEN={your token}
+```
+    Once done, migrate your database & install your app.
+
+```bash copy
+$ php artisan migrate 
+$ php artisan system:install
+```
+
+MOBI SYS USSD XML FORMAT
+
+Create a url to receive a query parameter called param1 which will receive the xml as follow
+
+```xml filename="Copy and Paste on Postman" copy
+http://localhost/path/to/controller?param1=
+<UssdMessage>
+    <MessageType>USSD</MessageType>
+    <ConversationID>sV6eryMMuiM5IY9B4HsR79ayXxE4bmUo</ConversationID>
+    <SessionID>sV6eryMMuiM5IY9B4HsR79ayXxE4bmUo</SessionID>
+    <TransactionID>sV6eryMMuiM5IY9B4HsR79ayXxE4bmUo</TransactionID>
+    <MessageString>*120*1073</MessageString>
+    <MSISDN>27731468812</MSISDN>
+    <Success>1</Success>
+    <IsFinal>FALSE</IsFinal>
+    <DateTimeReceived>2022-03-26UTC22:06:33</DateTimeReceived>
+    <MNO>Vodacom</MNO>
+</UssdMessage>
+```
+
+The XML is formatted as follow:
+```xml 
+<UssdMessage>
+    <MessageType>USSD</MessageType>
+    <ConversationID>sV6eryMMuiM5IY9B4HsR79ayXxE4bmUo</ConversationID>
+    <SessionID>sV6eryMMuiM5IY9B4HsR79ayXxE4bmUo</SessionID>
+    <TransactionID>sV6eryMMuiM5IY9B4HsR79ayXxE4bmUo</TransactionID>
+    <MessageString>*120*1073</MessageString>
+    <MSISDN>27731468812</MSISDN>
+    <Success>1</Success>
+    <IsFinal>FALSE</IsFinal>
+    <DateTimeReceived>2022-03-26UTC22:06:33</DateTimeReceived>
+    <MNO>Vodacom</MNO>
+</UssdMessage>
+```

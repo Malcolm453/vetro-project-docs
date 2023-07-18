@@ -1,0 +1,38 @@
+## Steps on database password expired
+
+```bash
+Step 1: $ sudo ssh <<username>> @ << ip_address>> (Please note remove angle brackets)*
+
+Step 2: Enter your laptop password
+
+Step 3: Enter your server password
+
+Step 4: $ ls into the directory then cd into sites
+
+Step 5: $ cd into vetro-sms-ussd-gateway
+
+Step 6: $ sudo docker ps (This will show you a list of all docker processes running copy the database process)
+
+Step 7: $ sudo docker exec -it <copied process> bash
+
+Step 8: $ mysql -u root -p (Login to MYSQL)
+
+Step 9: $ SET PASSWORD = PASSWORD('New password')
+
+Step 10: exit;
+
+Step 11: Try to login to MYSQL again using the new password
+
+Step 12: goto the root directory of the project
+
+Step 13: Update the password on the .env file with the new password
+
+Step 14: $ sudo docker-compose down
+
+Step 15: $ sudo docker-compose build
+
+Step 16: $ sudo docker-compose up -d (This command will start docker processes)
+
+Step 17: Test your site to see whether it's working or not
+
+```

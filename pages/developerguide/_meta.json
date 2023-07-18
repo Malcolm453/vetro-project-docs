@@ -1,0 +1,10 @@
+{
+    "getstarted": "Get Started",
+    "bugfixes": "Bug fixes",
+    "ussddeployment": "USSD Deployment",
+    "tyrelifeguide": "Tyrelife Guide",
+    "loyaltyguide": "Loyalty Guide",
+    "dockerguide": "Docker Guide",
+    "serversetup": "Server Set Up",
+    "laravelbestpractices": "Laravel Best Practices"
+}
